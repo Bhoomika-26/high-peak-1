@@ -1,0 +1,17 @@
+package java11basics;
+
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.util.Scanner;
+
+public class employee {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		
+		employeeGoodies n =new employeeGoodies("C:\\Users\\admin\\git\\coding-assignment-Sep-2020\\2020-Freshers\\goodie-dilemma\\sample_input.txt");
+		
+
+
+	}
+}

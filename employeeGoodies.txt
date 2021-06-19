@@ -1,0 +1,129 @@
+package java11basics;
+
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Iterator;
+import java.util.Scanner;
+import java.util.Set;
+import java.util.TreeMap;
+
+public class employeeGoodies {
+	private static final String Employee = "Numberofemployees";
+	private static int employeeCount;
+	private String filePath;
+	private TreeMap<Integer, String> map;
+
+	public employeeGoodies(String filePath) {
+		this.filePath = filePath;
+		readfromfile(filePath);
+		calculateGoodies(readfromfile(filePath));
+	}
+
+	public static TreeMap<Integer, String> readfromfile(String filePath) {
+		TreeMap<Integer, String> map = new TreeMap<Integer, String>();
+		try {
+			File myObj = new File(filePath);
+			Scanner myReader = new Scanner(myObj);
+			while (myReader.hasNext()) {
+				String line = myReader.nextLine();
+				if (!line.isEmpty()) {
+					String[] s2 = line.replaceAll("\\s", "").split(":");
+
+					if (s2.length > 1 && (!s2[0].equals(Employee))) {
+						map.put(Integer.valueOf(s2[1]), s2[0]);
+					}
+
+					else if (s2.length > 1 && (s2[0].equals(Employee))) {
+						employeeCount = Integer.valueOf(s2[1]);
+						System.out.println(employeeCount);
+					}
+
+				}
+			}
+			myReader.close();
+		} catch (FileNotFoundException e) {
+			System.out.println("An error occurred.");
+			e.printStackTrace();
+
+		}
+		System.out.println(map);
+		return map;
+	}
+
+	
+	  public static void calculateGoodies(TreeMap<Integer,String> map ) 
+	  {
+		  File myObjwrite;
+	  if(employeeCount>map.size()) 
+	  { 
+		  System.out.println("Not enough gifts"); 
+	  } 
+	  else if(employeeCount==0) {
+	  System.out.println("Number of employess should be greater than 1"); 
+	  } 
+	  
+	  else {
+	 try { File myObj = new File("C:\\Users\\admin\\git\\coding-assignment-Sep-2020\\2020-Freshers\\goodie-dilemma\\Ouputfilename.txt"); 
+	 if (myObj.createNewFile()) 
+	 { 
+		 System.out.println("File created: " +
+	  myObj.getName()); 
+		 } 
+	 else { 
+		 System.out.println("File already exists."); 
+		 } 
+	 }
+	  catch (IOException e) 
+	 { 
+		  System.out.println("An error occurred.");
+	  e.printStackTrace(); }
+	 } 
+	  
+	  try{    
+		  int count1=1;
+		  
+		  BufferedWriter writer = new BufferedWriter(new FileWriter("C:\\Users\\admin\\git\\coding-assignment-Sep-2020\\2020-Freshers\\goodie-dilemma\\Ouputfilename.txt"));    
+		  writer.write("The goodies selected for distribution are:"); 
+		  writer.newLine();
+		  Iterator<Integer> k = map.keySet().iterator();
+		  ArrayList<Integer> keyList = new ArrayList<Integer>(map.keySet());
+		  int difference=keyList.get(employeeCount-1)-keyList.get(0);
+		  
+		  
+		 int pirntcount=1;
+		 
+		 
+		 
+		 while(k.hasNext())
+		  {
+			  Integer jk = k.next();
+			  //System.out.println(map.get(jk)+" "+jk);
+			  writer.write(map.get(jk)+" "+jk); 
+			  writer.newLine();
+			  if(pirntcount>=employeeCount ) {
+				  break;
+			  }
+			  pirntcount++;
+	 
+
+		   
+         }
+		 writer.write("And the difference between the chosen goodie with highest price and the lowest price is "+difference);
+		     writer.flush();
+        writer.close();
+	  }catch(Exception e){
+        	 System.out.println(e);
+        	 
+	  }    
+         System.out.println("Success...");    
+	  }
+	  
+	  
+	  }
+	 
+
